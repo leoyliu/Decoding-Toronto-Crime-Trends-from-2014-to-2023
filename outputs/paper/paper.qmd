@@ -1,0 +1,93 @@
+---
+title: "My title"
+subtitle: "My subtitle if needed"
+author: 
+  - Yuanyi (Leo) Liu
+thanks: "Code and data are available at: https://github.com/leoyliu/STA302-Paper-1."
+date: today
+date-format: long
+abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
+format: pdf
+number-sections: true
+bibliography: references.bib
+---
+
+```{r}
+#| include: false
+#| warning: false
+#| message: false
+
+install.packages("knitr")
+install.packages("janitor")
+install.packages("lubridate")
+install.packages("opendatatoronto")
+install.packages("tidyverse")
+install.packages("palmerpenguins")
+
+
+library(knitr)
+library(janitor)
+library(lubridate)
+library(opendatatoronto)
+library(tidyverse)
+library(palmerpenguins)
+```
+
+
+# Introduction
+
+You can and should cross-reference sections and sub-sections. 
+
+The remainder of this paper is structured as follows. @sec-data....
+
+
+
+# Data {#sec-data}
+
+Some of our data is of penguins (@fig-bills), from @palmerpenguins.
+
+```{r}
+#| label: fig-bills
+#| fig-cap: Bills of penguins
+#| echo: false
+
+ggplot(penguins, aes(x = island, fill = species)) +
+  geom_bar(alpha = 0.8) +
+  scale_fill_manual(values = c("darkorange","purple","cyan4"),
+                    guide = "none") +
+  theme_minimal() +
+  facet_wrap(~species, ncol = 1) +
+  coord_flip()
+```
+
+Talk more about it.
+
+And also planes (@fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
+
+
+Talk way more about it. 
+
+# Discussion
+
+## First discussion point {#sec-first-point}
+
+If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this. 
+
+## Second discussion point
+
+## Third discussion point
+
+## Weaknesses and next steps
+
+Weaknesses and next steps should also be included.
+
+\newpage
+
+\appendix
+
+
+\newpage
+
+
+# References
+
