@@ -1,7 +1,7 @@
-# Motor vehicle collisions in Toronto
+# Shifting Shadows of the Six: Decoding Toronto's Crime Trends from 2014 to 2023
 
 ## Overview
-This repository contains a paper investigating motor vehicle collisions in Toronto that result in injuries or deaths from 2006 to 2020. By exploring the trend of these traffic collisions in respect of their frequency, fatality, and location, I find that the total number of accidents has a descending trend. However, the number of vehicle collisions that occurred at intersections has not been reduced despite the fact that more red light cameras are installed. This finding suggests that unlike the claimed purpose of this electronic monitor, red light camera doesn't prevent serious traffic accidents from happening at intersection, and furthur measures should be taken to enhance the safety issue on road. The data used in this paper can be found in the Open Data Portal of Toronto.
+This repository contains a paper presenting a comprehensive analysis of crime trends in Toronto, leveraging a detailed dataset to explore how various types of crimes have evolved over recent years. Through meticulous data processing and visualization, the paper identifies significant trends in crime rates, distinguishing between categories that have seen increases, decreases, or fluctuations over time. The analysis provides valuable insights into the complex dynamics of urban crime, highlighting potential influencing factors such as socio-economic changes, urban development, and law enforcement strategies. This paper serves as a crucial resource for data-driven decision-making in public safety and community well-being initiatives.
 
 ## Files structure
 - Inputs folder contains a data folder with all raw datas
