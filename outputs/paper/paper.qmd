@@ -61,9 +61,9 @@ The data was processed and cleaned using R, a powerful statistical programming l
 
 * **Data Cleaning:** Addressing missing values, standardizing formats, and filtering out irrelevant variables (e.g., removing rate-based columns).
 
-* **Data Transformation:** Converting the dataset from a wide format to a long format for easier manipulation using the `tidyr` package.
+* **Data Transformation:** Converting the dataset from a wide format to a long format for easier manipulation using the `tidyr`[@citetidyr] package.
 
-* **Aggregation:** Summarizing the data by year and crime type using the `dplyr` package.
+* **Aggregation:** Summarizing the data by year and crime type using the `dplyr`[@citedplyr] package.
 
 ## Variables Explanation
 The dataset includes various crime categories, such as assault, theft, and other types, with each variable representing the annual count of reported cases for each crime type. This longitudinal data provides a detailed view of the crime trends in Toronto over a decade.
