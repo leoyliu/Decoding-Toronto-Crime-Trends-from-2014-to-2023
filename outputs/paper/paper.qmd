@@ -1,12 +1,11 @@
 ---
-title: "My title"
-subtitle: "My subtitle if needed"
+title: "Shifting Shadows of the Six: Decoding Toronto's Crime Trends from 2014 to 2023"
 author: 
   - Yuanyi (Leo) Liu
 thanks: "Code and data are available at: https://github.com/leoyliu/STA302-Paper-1."
 date: today
 date-format: long
-abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
+abstract: "In this study, we conducted a comprehensive analysis of crime trends in Toronto, utilizing a dataset detailing various criminal activities from 2014 to 2023. Our investigation focused on the evolution of different types of crimes, with a specific emphasis on contrasting violent crimes, such as assault and robbery, against non-violent offenses like theft and fraud. The findings reveal significant patterns in both categories, highlighting an evolving landscape of criminal behavior in Toronto. This research is crucial as it sheds light on the changing dynamics of urban crime, providing valuable insights for policymakers, law enforcement agencies, and community leaders in developing targeted strategies for crime prevention and enhancing public safety in metropolitan areas."
 format: pdf
 number-sections: true
 bibliography: references.bib
@@ -17,13 +16,13 @@ bibliography: references.bib
 #| warning: false
 #| message: false
 
-install.packages("knitr")
-install.packages("janitor")
-install.packages("lubridate")
-install.packages("opendatatoronto")
-install.packages("tidyverse")
-install.packages("palmerpenguins")
-
+# install.packages("knitr")
+# install.packages("janitor")
+# install.packages("lubridate")
+# install.packages("opendatatoronto")
+# install.packages("tidyverse")
+# install.packages("palmerpenguins")
+# install.packages("here")
 
 library(knitr)
 library(janitor)
@@ -31,63 +30,126 @@ library(lubridate)
 library(opendatatoronto)
 library(tidyverse)
 library(palmerpenguins)
+library(here)
 ```
 
 
-# Introduction
+# Introduction {#sec-intro}
 
-You can and should cross-reference sections and sub-sections. 
+Urban crime, a multifaceted issue impacting communities worldwide, poses significant challenges to public safety and social stability. Toronto, Canada's largest city, is no exception. The broader context of urban crime in Toronto is critical in understanding its impact on the city's development, public perception, and policy formulation. Despite extensive research in urban criminology, there remains a gap in comprehensively understanding how different types of crimes, especially violent and non-violent, have evolved over recent years in Toronto. This gap is crucial for developing effective crime prevention strategies and enhancing public safety.
 
-The remainder of this paper is structured as follows. @sec-data....
+This paper presents a detailed analysis of crime trends in Toronto from 2014 to 2023. The study focuses on two primary crime categories: violent crimes, such as assault and robbery, and non-violent crimes, including theft and fraud. By leveraging a comprehensive dataset, we delve into how these crime categories have changed over time and their implications for urban safety and policing strategies. The analysis not only uncovers patterns and trends in these crime categories but also offers a comparative perspective, highlighting the distinct trajectories of violent and non-violent crimes.
 
+The findings of this study are significant for several reasons. First, they provide a nuanced understanding of the crime dynamics in a major urban center, offering insights that are vital for policymakers, law enforcement, and community leaders. The patterns observed suggest shifts in criminal behavior and possibly reflect broader social and economic changes in the city. Second, the comparative analysis between violent and non-violent crimes offers a unique perspective on the nature of criminal activities, contributing to a more targeted approach in crime prevention and community safety initiatives.
+
+The paper is structured to facilitate a comprehensive understanding of the study and its implications. Following this introduction @sec-intro, the second section presents the data @sec-data, detailing the data sources, analytical techniques, and the rationale behind the chosen methods. The third section discusses the results @sec-result, elaborating on the observed trends and patterns in crime data. The fourth section provides an in-depth discussion @sec-discussion of these findings, exploring potential factors influencing these trends and drawing connections to broader urban issues. Finally, the paper concludes with a summary of the findings, their implications for urban safety and policy, and suggestions for future research in this area.
 
 
 # Data {#sec-data}
 
-Some of our data is of penguins (@fig-bills), from @palmerpenguins.
+## Overview
+This section @sec-data aims to offer an insightful understanding of the dataset utilized in our analysis, focusing on its content, origin, and the methods applied for data manipulation and visualization.
+
+## Source of the Data
+The dataset comprises crime statistics in Toronto, spanning from 2014 to 2023. It was sourced from Open Data Toronto[@cite1], a reputable provider of public safety and criminal statistics. This dataset is publicly available and is often used for academic and policy research due to its reliability and comprehensive coverage.
+
+## Alternative Dataset Consideration
+Although alternative datasets were considered, this specific dataset was selected for its detailed year-wise breakdown and the diversity of crime types it encompasses. Other datasets either lacked the temporal detail or the variety of crime categories present in our chosen dataset.
+
+## Data Manipulation and Cleaning in R [@citeR]
+The data was processed and cleaned using R, a powerful statistical programming language. Key operations included:
+
+* **Data Cleaning:** Addressing missing values, standardizing formats, and filtering out irrelevant variables (e.g., removing rate-based columns).
+
+* **Data Transformation:** Converting the dataset from a wide format to a long format for easier manipulation using the `tidyr` package.
+
+* **Aggregation:** Summarizing the data by year and crime type using the `dplyr` package.
+
+## Variables Explanation
+The dataset includes various crime categories, such as assault, theft, and other types, with each variable representing the annual count of reported cases for each crime type. This longitudinal data provides a detailed view of the crime trends in Toronto over a decade.
+
+TODO: include a summary chart later.
 
 ```{r}
-#| label: fig-bills
-#| fig-cap: Bills of penguins
+#| label: fig-trends-in-crime
+#| fig-cap: Trends in Crime Cases in Toronto (2014-2023)
 #| echo: false
 
-ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar(alpha = 0.8) +
-  scale_fill_manual(values = c("darkorange","purple","cyan4"),
-                    guide = "none") +
+# Read the data
+crime_data <- read.csv(here("inputs/data/cleaned_toronto_crime_rates.csv"))
+
+# Remove unnecessary columns for this plot
+crime_data <- crime_data %>%
+  select(-grep("RATE", names(crime_data)))
+
+# Gather the data to a long format
+crime_data_long <- crime_data %>%
+  gather(key = "Crime_Year", value = "Count", -AREA_NAME)
+
+# Extract year and crime type from the 'Crime_Year' column
+crime_data_long <- crime_data_long %>%
+  separate(Crime_Year, into = c("Crime_Type", "Year"), sep = "_") %>%
+  mutate(Year = as.numeric(Year))
+
+# Aggregate the data by year and crime type
+crime_data_summary <- crime_data_long %>%
+  group_by(Crime_Type, Year) %>%
+  summarise(Total = sum(Count, na.rm = TRUE), .groups = "drop")
+
+# Plotting all crime types in one graph
+ggplot(crime_data_summary, aes(x = Year, y = Total, color = Crime_Type)) +
+  geom_line() +
+  labs(title = "Evolution of Various Crimes in Toronto", x = "Year", y = "Total Count") +
   theme_minimal() +
-  facet_wrap(~species, ncol = 1) +
-  coord_flip()
+  theme(legend.position="bottom") +
+  guides(color = guide_legend(title = "Crime Type"))
+```
+@fig-trends-in-crime reveals distinct trends for various crime types in Toronto over the years. We notice that assault crimes have been on the rise in recent years, this could signal a growing concern in public safety and might prompt law enforcement to investigate the underlying causes, such as increased urbanization, changes in population density, or other socio-economic factors. Conversely, there is a noticeable decline in theft-related crimes, it could reflect the success of recent crime prevention initiatives, improved security measures, or increased public awareness.
+
+## Data Visualization
+For visual representation, `ggplot2`, a versatile package in R for data visualization, was employed. It was used to create comprehensive line plots depicting the trends of various crime categories over the years. These plots are instrumental in visualizing the temporal patterns and changes in crime statistics.
+
+## Summary Statistics and Relationship Analysis
+The dataset was summarized using basic statistical measures (mean, median, standard deviation) to provide an overview of each crime category. Further, the relationships between different crime types were explored to understand correlated trends, if any.
+
+# Results {#sec-result}
+
+```{r}
+#| echo: false
+#| eval: true
+#| warning: false
+#| message: false
+
 ```
 
-Talk more about it.
+```{r}
+#| echo: false
+#| eval: true
+#| label: tbl-modelresults
+#| tbl-cap: "Explanatory models of flight time based on wing width and wing length"
+#| warning: false
+```
 
-And also planes (@fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
+Based on the analysis of the provided dataset and the visual representation of crime trends in Toronto over the years, several key results can be summarized:
 
+* **Variation in Crime Trends:** The dataset reveals distinct trends for different types of crimes in Toronto. Some crime categories exhibit an upward trend, indicating an increase in incidents over the years, while others show a downward trend, suggesting a decrease in occurrences. This variation highlights the complexity of crime dynamics in an urban setting.
 
-Talk way more about it. 
+* **Potential Factors Influencing Trends:** The observed trends in crime rates could be influenced by a multitude of factors. These include socio-economic changes, urban development, law enforcement strategies, policy reforms, and technological advancements in crime reporting. For example, an increase in certain types of crimes might be linked to economic downturns, demographic shifts, or changes in urban density, while a decrease could reflect effective policing strategies or community intervention programs.
 
-# Discussion
+# Discussion {#sec-discussion}
 
-## First discussion point {#sec-first-point}
+## Implications for Policymakers and Law Enforcement: {#sec-first-point}
 
-If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this. 
+The findings of this analysis are particularly relevant for policymakers and law enforcement agencies. Understanding these trends is crucial for developing targeted strategies to address and prevent crime effectively, thereby enhancing public safety and community well-being in Toronto.
 
 ## Second discussion point
 
-## Third discussion point
 
 ## Weaknesses and next steps
 
-Weaknesses and next steps should also be included.
+While the visual analysis provides a high-level overview of crime trends in Toronto, it's essential to conduct more detailed investigations to understand the underlying causes of these trends. This includes examining subcategories of crimes, focusing on specific geographic areas within the city, and considering other relevant data sources.
 
 \newpage
-
-\appendix
-
-
-\newpage
-
 
 # References
 

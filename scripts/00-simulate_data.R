@@ -1,9 +1,8 @@
 #### Preamble ####
 # Purpose: Get data on 2021 shelter usage and make table
-# Author: Rohan Alexander
-# Email: rohan.alexander@utoronto.ca
-# Date: 1 July 2022
-# Prerequisites: -
+# Author: Yuanyi (Leo) Liu
+# Email: leoy.liu@mail.utoronto.ca
+# Date: 21 January 2024
 
 #### Workspace setup ####
 install.packages("knitr")
