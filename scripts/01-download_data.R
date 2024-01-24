@@ -9,7 +9,6 @@
 library(opendatatoronto)
 library(tidyverse)
 library(dplyr)
-library(readr)
 
 #### Download data ####
 # Each package is associated with a unique id  found in the "For 
