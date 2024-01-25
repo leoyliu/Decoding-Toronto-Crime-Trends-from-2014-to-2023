@@ -1,40 +1,38 @@
 #### Preamble ####
-# Purpose: Get data on 2021 shelter usage and make table
+# Purpose: Simulates data
 # Author: Yuanyi (Leo) Liu
 # Email: leoy.liu@mail.utoronto.ca
 # Date: 21 January 2024
+# License: MIT
+
 
 #### Workspace setup ####
-install.packages("knitr")
-install.packages("janitor")
-install.packages("lubridate")
-install.packages("opendatatoronto")
-install.packages("tidyverse")
-
-library(knitr)
+# install.packages("janitor")
+# install.packages("tidyverse")
 library(janitor)
-library(lubridate)
-library(opendatatoronto)
 library(tidyverse)
+
 
 #### Simulate ####
 
+# In this simulation, we only want the number of cases reported of each crime type from 2014 to 2023.
+# First, A tibble is created with initial Crime_Type column.
+# Second, A loop runs through each year from 2014 to 2023.
+# In each iteration of the loop, a new column is added to simulated_data for the respective year. 
+# The sample function generates random counts for the crimes for that year.
+# Third, replace = TRUE in the sample function allows for the possibility of the same number being chosen more than once.
+
 set.seed(853)
 
-simulated_occupancy_data <-
-  tibble(
-    date = rep(x = as.Date("2021-01-01") + c(0:364), times = 3),
-    # Based on Eddelbuettel: https://stackoverflow.com/a/21502386
-    shelter = c(
-      rep(x = "Shelter 1", times = 365),
-      rep(x = "Shelter 2", times = 365),
-      rep(x = "Shelter 3", times = 365)
-    ),
-    number_occupied =
-      rpois(
-        n = 365 * 3,
-        lambda = 30
-      ) # Draw 1,095 times from the Poisson distribution
-  )
+crime_types <- c("Assault", "Auto Theft", "Bike Theft", "Break and Enter", "Homicide", "Robbery", "Shooting Incidents", "Theft from Motor Vehicles", "Major Theft")
 
-head(simulated_occupancy_data)
+# Initialize a tibble
+simulated_data <- tibble(Crime_Type = crime_types)
+
+# Add columns for each year from 2014 to 2023 with simulated data
+for(year in 2014:2023) {
+  simulated_data[[as.character(year)]] <- sample(500:10000, length(crime_types), replace = TRUE)
+}
+
+# View the simulated data
+print(simulated_data)

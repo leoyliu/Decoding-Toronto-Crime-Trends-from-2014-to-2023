@@ -5,10 +5,12 @@
 # Contact: leoy.liu@mail.utoronto.ca
 # License: MIT
 
+
 #### Workspace setup ####
 library(opendatatoronto)
 library(tidyverse)
 library(dplyr)
+
 
 #### Download data ####
 # Each package is associated with a unique id  found in the "For 
