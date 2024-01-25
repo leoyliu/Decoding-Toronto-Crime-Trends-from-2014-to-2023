@@ -58,21 +58,10 @@ The dataset comprises crime statistics in Toronto, spanning from 2014 to 2023. T
 Although alternative datasets were considered, this specific dataset was selected for its detailed year-wise breakdown and the diversity of crime types it encompasses. Other datasets either lacked the temporal detail or the variety of crime categories present in our chosen dataset.
 
 ## Data Manipulation and Cleaning
-The data was processed and cleaned using R[@citeR], a powerful statistical programming language. Key operations included:
-
-* **Data Cleaning:** The initial phase of cleaning the Toronto crime rates dataset involved importing the raw data using the `read_csv` function from the `readr`[@citereadr] package. Following the import, the dataset was streamlined using the `select` function from `dplyr`[@citedplyr], a tidyverse[@citetidyverse] package, to remove irrelevant columns such as `X_id`, `HOOD_ID`, `POPULATION_2023`, and `geometry`. This step was crucial to focus the analysis on relevant variables. Additionally, the `na.omit` function was employed to discard any rows with missing values (NA), ensuring the dataset's completeness and reliability. The final step in the cleaning process was the exportation of the cleaned data into a new CSV file using the `write_csv `function from `readr`[@citereadr], thereby preserving the cleaned and refined dataset for subsequent analysis.
-
-* **Data Transformation:** The dataset was transformed from a wide format to a long format using the `gather` function from the `tidyr`[@citetidyr] package. This transformation is crucial for simplifying the data structure and making it more amenable to analysis. Also, the separate function, again from `tidyr`[@citetidyr], was instrumental in dividing the 'Crime_Year' column into two distinct parts: 'Crime_Type' and 'Year'. This enhances the granularity of the dataset, allowing for more detailed analysis.
-
-* **Aggregation:** The `group_by` and `summarise` functions from `dplyr`[@citedplyr] were employed to aggregate the data by year and crime type.
-
-* **Data Visualization:** For visual representation, `ggplot2`[@citeggplot], a versatile package in R for data visualization, was employed. It was used to create comprehensive line plots depicting the trends of various crime categories over the years.
-
-* **Paper Generation:** The packages `knitr`[@citeknitr] is used in generating R Markdown reports.
+The data was processed and cleaned using R[@citeR], a powerful statistical programming language. For key operations please refer to the [@sec-appendix]. 
 
 ## Variables Explanation
-The dataset includes various crime categories, such as assault, theft, and other types, with each variable representing the annual count of reported cases for each crime type. This longitudinal data provides a detailed view of the crime trends in Toronto over a decade. 
-
+To better understanding the data, summary_table dataset was developed to offer a more structured and aggregated view of the crime data. By transforming and summarizing the data into a format that displays crime types against years, this dataset simplifies the task of identifying and analyzing trends over time. The dataset includes various crime categories, such as assault, theft, and other types, with each variable representing the annual count of reported cases for each crime type. This longitudinal data provides a detailed view of the crime trends in Toronto over a decade. 
 ```{r}
 #| label: tbl-data-summary
 #| tbl-cap: Crime Incidents Summary by Year
@@ -95,7 +84,7 @@ summary_table %>%
 ```
 For @tbl-data-summary, we observe a detailed enumeration of various crime incidents reported annually in Toronto from 2014 to 2023. Assault cases dominate the data, climbing substantially in subsequent years, indicating a worsening public safety concern. Each crime category follows its own trajectory, with theft from motor vehicles and major theft also showing significant fluctuations.
 
-We proceeded to organize the dataset into two categories: 'Violent' crimes, which included offenses such as 'Assault' and 'Homicide', and 'Non-Violent' crimes, encompassing acts like 'Theft'. Following this classification, we combined the data into these new groupings, totaling the number of incidents in each category for each year of the research.
+We proceeded to organize the dataset into two categories: 'Violent' crimes, which included offenses such as 'Assault' and 'Homicide', and 'Non-Violent' crimes, encompassing acts like 'Theft'. It is particularly valuable for understanding the overall landscape of crime in Toronto, focusing on the comparison between violent and non-violent incidents.
 ```{r}
 #| label: tbl-combined-data-summary
 #| tbl-cap: Crime Incidents Summary of Violent and Non-Violent Crime Cases by Year
@@ -192,7 +181,7 @@ Overall, the graph indicates that while both violent and non-violent crimes have
 
 The analysis of Toronto's crime trends from 2014 to 2023 reveals a complex and evolving landscape of public safety. The pronounced increase in assault cases in recent years is alarming, suggesting that the city may be facing emerging challenges in maintaining public order. This rise in violent crime needs a closer investigation of possible causative factors, such as the effects of increased urbanization, economic disparity, and shifts in population density.
 
-## Variation in Crime Trends: {#sec-first-point}
+## Variation in Crime Trends {#sec-first-point}
 
 Simultaneously, the decline in theft-related crimes offers a more hopeful narrative. This trend may reflect the successful implementation of preventative measures by law enforcement agencies, such as community policing efforts and the integration of advanced surveillance technology.  The use of crime prevention techniques, potentially aided by increased public awareness and education, appears to be bearing fruit.
 
@@ -207,4 +196,22 @@ Furthermore, this study emphasises the need of ongoing monitoring and analysis o
 \newpage
 
 # References
+
+::: {#refs}
+:::
+
+{{< pagebreak >}}
+
+# Appendix {#sec-appendix}
+## Data Manipulation and Cleaning
+* **Data Cleaning:** The initial phase of cleaning the Toronto crime rates dataset involved importing the raw data using the `read_csv` function from the `readr`[@citereadr] package. Following the import, the dataset was streamlined using the `select` function from `dplyr`[@citedplyr], a tidyverse[@citetidyverse] package, to remove irrelevant columns such as `X_id`, `HOOD_ID`, `POPULATION_2023`, and `geometry`. This step was crucial to focus the analysis on relevant variables. Additionally, the `na.omit` function was employed to discard any rows with missing values (NA), ensuring the dataset's completeness and reliability. The final step in the cleaning process was the exportation of the cleaned data into a new CSV file using the `write_csv `function from `readr`[@citereadr], thereby preserving the cleaned and refined dataset for subsequent analysis.
+
+* **Data Transformation:** The dataset was transformed from a wide format to a long format using the `gather` function from the `tidyr`[@citetidyr] package. This transformation is crucial for simplifying the data structure and making it more amenable to analysis. Also, the separate function, again from `tidyr`[@citetidyr], was instrumental in dividing the 'Crime_Year' column into two distinct parts: 'Crime_Type' and 'Year'. This enhances the granularity of the dataset, allowing for more detailed analysis.
+
+* **Aggregation:** The `group_by` and `summarise` functions from `dplyr`[@citedplyr] were employed to aggregate the data by year and crime type.
+
+* **Data Visualization:** For visual representation, `ggplot2`[@citeggplot], a versatile package in R for data visualization, was employed. It was used to create comprehensive line plots depicting the trends of various crime categories over the years.
+
+* **Paper Generation:** The packages `knitr`[@citeknitr] is used in generating R Markdown reports.
+
 
