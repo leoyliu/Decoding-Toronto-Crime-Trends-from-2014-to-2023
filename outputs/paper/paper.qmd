@@ -2,7 +2,7 @@
 title: "Shifting Shadows of the Six: Decoding Toronto's Crime Trends from 2014 to 2023"
 author: 
   - Yuanyi (Leo) Liu
-thanks: "Code and data are available at: https://github.com/leoyliu/STA302-Paper-1."
+thanks: "Code and data are available at: https://github.com/leoyliu/Decoding-Toronto-Crime-Trends-from-2014-to-2023."
 date: today
 date-format: long
 abstract: "In this study, we conducted a comprehensive analysis of crime trends in Toronto, utilizing a dataset detailing various criminal activities from 2014 to 2023. Our analysis focused on the evolution of different types of crimes, with a specific emphasis on contrasting violent crimes, such as assault and robbery, against non-violent offenses like theft. The findings reveal significant patterns in both categories, highlighting an evolving landscape of criminal behavior in Toronto. This research is crucial as it sheds light on the changing dynamics of urban crime, providing valuable insights for policymakers, law enforcement agencies, and community leaders in developing targeted strategies for crime prevention and enhancing public safety in metropolitan areas."
